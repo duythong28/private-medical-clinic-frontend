@@ -20,6 +20,7 @@ import PatientDetail from "./pages/patients/PatientDetail";
 import ExaminationDetail from "./pages/settings/examination/ExaminationDetail";
 import PreScriptionTab from "./pages/settings/examination/PrescriptionTab";
 import HistoryTab from "./pages/settings/examination/HistoryTab";
+import Invoice from "./pages/Invoice/Invoice";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
         path: "home",
         element: <HomePage />,
       },
+      { path: "invoice", element: <Invoice /> },
       { path: "reports", element: <ReportsPage /> },
       { path: "patients", element: <PatientsPage /> },
       {
