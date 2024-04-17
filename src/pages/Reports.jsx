@@ -6,7 +6,7 @@ import Report from './report/Medicine/Medicine';
 const cx = classNames.bind(styles);
 
 function ReportsPage() {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const handleSetPage = (newpage) => {
         setPage(newpage);
     };

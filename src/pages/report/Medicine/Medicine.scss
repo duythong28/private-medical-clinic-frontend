@@ -73,3 +73,17 @@
 .icon-view {
     font-size: 15px;
 }
+.export-button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    button {
+        width: 100px;
+        background-color: #208000;
+        border-radius: 2px;
+        .icon-export {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+    }
+}

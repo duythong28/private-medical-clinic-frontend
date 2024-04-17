@@ -101,7 +101,7 @@ function GridViewRevenue({date, getDayOfMonth, aptList, billList, timeOption}) {
         worksheet.mergeCells('A2:E2');
         const reportCell2 = worksheet.getCell('A2');
         if(timeOption === 'Tháng')
-            reportCell2.value = 'Tháng: ' + date.month;
+            reportCell2.value = 'Tháng: ' + date.month + '/' + date.year;
         else 
             reportCell2.value = 'Năm: ' + date.year;
         reportCell2.font = { bold: true };
@@ -127,12 +127,15 @@ function GridViewRevenue({date, getDayOfMonth, aptList, billList, timeOption}) {
         for (let i = 0; i < SumList.length; i++) {
             let tmpTime = (i+1)+'/'+date.year;
             if(timeOption === 'Tháng') tmpTime = displayTime(i+1,date.month,date.year);
+            let tl;
+            if(total === 0) tl = '0%';
+            else tl = Math.floor(SumList[i]/total * 10000)/100 + '%';
             data.push({
                 STT: i+1,
                 ngay: tmpTime,
                 soBenhNhan: CountList[i],
                 doanhThu: SumList[i],
-                tiLe: Math.floor(SumList[i]/total * 10000)/100 + '%',
+                tiLe: tl,
             })
         }
         data.forEach((row, rowIndex) => {
@@ -142,8 +145,11 @@ function GridViewRevenue({date, getDayOfMonth, aptList, billList, timeOption}) {
               cell.alignment = { horizontal: 'left' };
             });
           });
+        let nameExport;
+        if(timeOption == 'Tháng') nameExport  = 'Bao_Cao_Doanh_Thu_Thang_' + date.month + '/' + date.year;
+        else  nameExport  = 'Bao_Cao_Doanh_Thu_Nam_' + date.year;
         workbook.xlsx.writeBuffer().then((buffer) => {
-            saveAs(new Blob([buffer]), 'data.xlsx');
+            saveAs(new Blob([buffer]), nameExport + '.xlsx');
         });
       }
     return ( <div>

@@ -3,9 +3,11 @@ import TableHeader from '../../../components/TableHeader';
 import TableBody from '../../../components/TableBody';
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faChartSimple, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faBorderAll, faCaretDown, faChartSimple, faEye, faFileExcel } from '@fortawesome/free-solid-svg-icons';
 import SelectTime from '../../../components/SelectTime';
 import * as React from 'react';
+import ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
 
 import {
   fetchAllAppointmentList
@@ -123,12 +125,28 @@ const drugList = ConvernToArray(drugs);
         setIsOpenCalendar(value);
     }
 
-    const countDrugInRecord = (item) => {
-      let cnt = 0;
-      for(let i = 0; i < recDetList.length; i++) {
-        if(recDetList[i].drugId === item.id) cnt++;
-      }
-      return cnt;
+    const countDrugInRecord = (month, year, item) => {
+      let arrApt = [];
+          let count = 0;
+          for(let j = 0; j < aptList.length; j++) {
+            const tmp = StringToDate(aptList[j].scheduleDate);
+            if((month == -1 || tmp.month === month) && tmp.year === year)
+              arrApt.push(aptList[j].id)
+          }
+          let arrRec = [];
+          for(let j = 0; j < recList.length; j++) {
+            if(arrApt.includes(recList[j].appointmentListId))
+              arrRec.push(recList[j].id);
+          }
+
+          for(let j = 0; j < recDetList.length; j++) {
+            if(arrRec.includes(recDetList[j].appointmentRecordId)) {
+              if(recDetList[j].drugId === item.id) {
+                count++;
+              }
+            }
+          }
+          return count;
     }
     
     const formatDate = (date) => {
@@ -211,11 +229,9 @@ const drugList = ConvernToArray(drugs);
             if(arrApt.includes(recList[j].appointmentListId))
               arrRec.push(recList[j].id);
           }
-          console.log(i + ": " + arrRec);
           for(let j = 0; j < recDetList.length; j++) {
             if(arrRec.includes(recDetList[j].appointmentRecordId)) {
               if(recDetList[j].drugId === item.id) {
-                console.log("detail: " + recDetList.count);
                 count = count + recDetList[j].count;
               }
             }
@@ -235,11 +251,12 @@ const drugList = ConvernToArray(drugs);
           }
           let arrRec = [];
           for(let j = 0; j < recList.length; j++) {
-            if(arrApt.includes(recList[j].id))
+            if(arrApt.includes(recList[j].appointmentListId))
               arrRec.push(recList[j].id);
           }
+
           for(let j = 0; j < recDetList.length; j++) {
-            if(arrRec.includes(recDetList[j].id)) {
+            if(arrRec.includes(recDetList[j].appointmentRecordId)) {
               if(recDetList[j].drugId === item.id) {
                 count = count + recDetList[j].count;
               }
@@ -258,11 +275,11 @@ const drugList = ConvernToArray(drugs);
           }
           let arrRec = [];
           for(let j = 0; j < recList.length; j++) {
-            if(arrApt.includes(recList[j].id))
+            if(arrApt.includes(recList[j].appointmentListId))
               arrRec.push(recList[j].id);
           }
           for(let j = 0; j < recDetList.length; j++) {
-            if(arrRec.includes(recDetList[j].id)) {
+            if(arrRec.includes(recDetList[j].appointmentRecordId)) {
               if(recDetList[j].drugId === item.id) {
                 count = count + recDetList[j].count;
               }
@@ -277,7 +294,6 @@ const drugList = ConvernToArray(drugs);
         let tmp = chartData;
         tmp.labels = getLabelForChartWeek(date);
         const tmp2 = getDataNewForChartWeek(date, item);
-        console.log(tmp2);
         tmp.datasets = [
             {
               label: 'Số lượng bán ra',
@@ -328,14 +344,171 @@ const drugList = ConvernToArray(drugs);
             },
         },
     };
+    /// Main Select Time:
+    const [valueTime2, setValueTime2] = React.useState(dayjs());
+    const setNewTime2 = (value) => {
+        setValueTime2(value);
+    }
+    const [isOpenCalendar2, setIsOpenCalendar2] = React.useState(false);
+    const handleOpenCalendar2 = (value) => {
+        setIsOpenCalendar2(value);
+        setIsOpenTimeOption2(false);
+    }
+    const [isOpenTimeOption2, setIsOpenTimeOption2] = React.useState(false);
+    const handleOpenTimeOption2 = (value) => {
+        setIsOpenCalendar2(false);
+        setIsOpenTimeOption2(value);
+    }
+    const [timeOption2, setTimeOption2] = React.useState('Tháng');
+    const handleSetTimeOption2 = (value) => {
+        setTimeOption2(value);
+    }
+    const displayTime2 = (date) => {
+      const time = formatDate(date);
+      if(timeOption2 == 'Tháng') {
+              return 'Thg ' + time.month + ' ' + time.year;
+      }
+      if(timeOption2 == 'Năm') {
+          return time.year; 
+      }
+  }
+  const getCountInTime = (month, year, item) => {
+          let arrApt = [];
+          let count = 0;
+          for(let j = 0; j < aptList.length; j++) {
+            const tmp = StringToDate(aptList[j].scheduleDate);
+            if((month == -1 || tmp.month === month) && tmp.year === year)
+              arrApt.push(aptList[j].id)
+          }
+          let arrRec = [];
+          for(let j = 0; j < recList.length; j++) {
+            if(arrApt.includes(recList[j].appointmentListId))
+              arrRec.push(recList[j].id);
+          }
+
+          for(let j = 0; j < recDetList.length; j++) {
+            if(arrRec.includes(recDetList[j].appointmentRecordId)) {
+              if(recDetList[j].drugId === item.id) {
+                count = count + recDetList[j].count;
+              }
+            }
+          }
+          return count;
+  }
+  const handleExportReport = () =>{
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Bảng Báo Cáo');
+   
+    const date = formatDate(valueTime2);
+    worksheet.mergeCells('A2:E2');
+    const reportCell2 = worksheet.getCell('A2');
+    if(timeOption2 === 'Tháng')
+        reportCell2.value = 'Tháng: ' + date.month + '/' + date.year;
+    else 
+        reportCell2.value = 'Năm: ' + date.year;
+    reportCell2.font = { bold: true };
+    reportCell2.alignment = { vertical: 'middle', horizontal: 'center' };
+
+    worksheet.getRow(3).values = ['STT', 'Thuốc', 'Đơn vị tính', 'Số lượng', 'Số lần dùng'];
+    worksheet.columns = [
+        { header: 'STT', key: 'STT', width: 5 },
+        { header: 'Thuốc', key: 'thuoc', width: 20 },
+        { header: 'Đơn vị tính', key: 'donVi', width: 15 },
+        { header: 'Số lượng', key: 'soLuong', width: 15 },
+        { header: 'Số lần dùng', key: 'soLD', width: 10 },
+    ];
+    worksheet.mergeCells('A1:E1');
+    const reportCell = worksheet.getCell('A1');
+    reportCell.value = 'Báo Cáo Sử Dụng Thuốc Theo ' + timeOption2;
+    reportCell.font = { bold: true };
+    reportCell.alignment = { vertical: 'middle', horizontal: 'center' };
     
+    let data = [];
+    for (let i = 0; i < drugList.length; i++) {
+      let sl;
+      if(timeOption2 === 'Tháng') sl = getCountInTime(formatDate(valueTime2).month, formatDate(valueTime2).year, drugList[i]);
+      else sl = getCountInTime(-1, formatDate(valueTime2).year, drugList[i])
+      let sld;
+      if(timeOption2 === 'Tháng') sld = countDrugInRecord(date.month, date.year, drugList[i]);
+      else sld = countDrugInRecord(-1, date.year, drugList[i])
+        data.push({
+            STT: i+1,
+            thuoc: drugList[i].drugName,
+            donVi: getUnitName({ id: drugList[i].unitId }),
+            soLuong: sl,
+            soLD: sld,
+        })
+    }
+    data.forEach((row, rowIndex) => {
+        const rowObject = worksheet.getRow(rowIndex + 4);
+        rowObject.values = row;
+        rowObject.eachCell((cell) => {
+          cell.alignment = { horizontal: 'left' };
+        });
+      });
+    let nameExport;
+    if(timeOption2 == 'Tháng') nameExport  = 'Bao_Cao_Su_Dung_Thuoc_Thang_' + date.month + '/' + date.year;
+    else  nameExport  = 'Bao_Cao_Su_Dung_Thuoc_Nam_' + date.year;
+    workbook.xlsx.writeBuffer().then((buffer) => {
+        saveAs(new Blob([buffer]), nameExport + '.xlsx');
+    });
+  }
 
     return ( 
-    
+      
     <div className="d-flex flex-row w-100">
         <div className="col-md-8">
+        
             <Card>
             <div className=" w-100 h-100 overflow-hidden d-flex flex-column gap-3">
+            <div className='row'>
+              <div className="d-flex col-md-6 justify-content-start">
+                      <div className='select-box-3' >
+                          <div className='combobox' onClick={() => handleOpenCalendar2(!isOpenCalendar2)}>
+                              <p>{displayTime2(valueTime2)}</p>
+                              <div className='icon'>
+                                  <FontAwesomeIcon className='icon' icon={faCaretDown} />
+                              </div>
+                          </div>
+                          {isOpenCalendar2 &&
+                              <div className='calendar'>
+                                  <SelectTime setNewTime={setNewTime2} value={valueTime2}></SelectTime>
+                              </div>
+                          }
+                      </div>
+                      <div className='select-box-2' style={{marginLeft: '10px'}}>
+                          <div className='combobox' onClick={() => handleOpenTimeOption2(!isOpenTimeOption2)}>
+                              <p>{timeOption2}</p>
+                              <div className='icon'>
+                                  <FontAwesomeIcon className='icon' icon={faCaretDown} />
+                              </div>
+                          </div>
+                          
+                          {isOpenTimeOption2 &&
+                              <div className='select-time' >
+                                  {/* <div className='item' onClick={() => {handleSetTimeOption('Tuần');  handleOpenTimeOption(false)}}>
+                                      <p>Tuần</p>
+                                  </div> */}
+                                  <div className='item' onClick={() => {handleSetTimeOption2('Tháng');  handleOpenTimeOption2(false)}}>
+                                      <p>Tháng</p>
+                                  </div>
+                                  <div className='item' onClick={() => {handleSetTimeOption2('Năm');  handleOpenTimeOption2(false)}}>
+                                      <p>Năm</p>
+                                  </div>
+                              </div>
+                          }
+                      </div>
+                      
+                  </div>
+                  <div className="d-flex col-md-6 justify-content-end">
+                  <div className="export-button">
+                <button onClick={handleExportReport}>
+                    <FontAwesomeIcon className='icon-export' icon={faFileExcel} />
+                    Export
+                </button>
+            </div>
+                </div>
+            </div>
             <TableHeader>
               <div className="text-start" style={{ width: "23%" }}>
                 Tên
@@ -344,7 +517,7 @@ const drugList = ConvernToArray(drugs);
                 Đơn vị
               </div>
               <div className="text-start" style={{ width: "23%" }}>
-                Số lượng tồn kho
+                Số lượng dùng
               </div>
               <div className="text-start" style={{ width: "20%" }}>
                 Giá
@@ -385,7 +558,8 @@ const drugList = ConvernToArray(drugs);
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                           >
-                            {drug.count}
+                            {timeOption2 === 'Tháng' && getCountInTime(formatDate(valueTime2).month, formatDate(valueTime2).year, drug)}
+                            {timeOption2 === 'Năm' && getCountInTime(-1, formatDate(valueTime2).year, drug)}
                           </div>
                           <div
                             className="text-start"
@@ -401,7 +575,7 @@ const drugList = ConvernToArray(drugs);
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                           >
-                              {countDrugInRecord(drug)}
+                              {timeOption2 === 'Tháng' ? countDrugInRecord(formatDate(valueTime2).month, formatDate(valueTime2).year, drug) : countDrugInRecord(-1, formatDate(valueTime2).year, drug)}
                           </div>
                           <div
                             className="text-end"
