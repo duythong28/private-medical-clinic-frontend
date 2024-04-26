@@ -2,7 +2,7 @@ import MainDialog from "../../../components/MainDialog";
 import { createAppointmentPatientList } from "../../../services/appointmentListPatients";
 import { fetchOnePatient } from "../../../services/patients";
 import { useRef, useState, forwardRef, useImperativeHandle } from "react";
-import { inputDateFormat } from "../../../util/date";
+import { inputDateFormat, inputToDayFormat } from "../../../util/date";
 
 const ExaminationModal = forwardRef(function ExaminationModal(
   { children, setSearchData },
@@ -72,16 +72,8 @@ const ExaminationModal = forwardRef(function ExaminationModal(
       name: name,
       phoneNumber: phoneNumber,
     });
-    console.log("This is data", resData);
-    if (resData && resData[0]) {
-      setDialogState((prevState) => {
-        return {
-          ...prevState,
-          data: null,
-          isEditable: false,
-        };
-      });
 
+    if (resData && resData[0]) {
       setDialogState((prevState) => {
         resData[0].patientId = resData[0].id;
         return {
@@ -98,6 +90,7 @@ const ExaminationModal = forwardRef(function ExaminationModal(
         ...prevState,
         data: null,
         isEditable: true,
+        
       };
     });
   }
@@ -187,12 +180,16 @@ const ExaminationModal = forwardRef(function ExaminationModal(
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData);
     const resData = {
+      patientId: data.patientid,
       address: data.address,
       birthYear: data.birthyear,
       fullName: data.fullname,
       gender: data.gender,
       phoneNumber: data.phonenumber,
+      scheduleDate: data.scheduledate,
     };
+
+
     setDialogState((prevState) => {
       return {
         ...prevState,
@@ -244,13 +241,14 @@ const ExaminationModal = forwardRef(function ExaminationModal(
               <input
                 type="date"
                 name="date"
+                defaultValue={inputToDayFormat()}
                 className="form-control"
                 aria-describedby="addon-wrapping"
               />
             </div>
             <div className="col input-group flex-nowrap">
               <select className="form-select" name="state" defaultValue="1">
-                <option value="1">Chưa khám</option>
+                <option value="1">Chưa hoàn thành</option>
                 <option value="2">Hoàn thành</option>
                 <option value="3">Tất cả</option>
               </select>
@@ -296,8 +294,9 @@ const ExaminationModal = forwardRef(function ExaminationModal(
                   className="form-control"
                   id="fullname"
                   name="fullname"
-                  // disabled={!dialogState.isEditable}
-                  readOnly={!dialogState.isEditable}
+                  readOnly={
+                    dialogState.data?.patientId || !dialogState.isEditable
+                  }
                   value={dialogState.data?.fullName ?? ""}
                   required
                 />
@@ -312,8 +311,9 @@ const ExaminationModal = forwardRef(function ExaminationModal(
                   name="phonenumber"
                   type="tel"
                   value={dialogState.data?.phoneNumber ?? ""}
-                  // disabled={!dialogState.isEditable}
-                  readOnly={!dialogState.isEditable}
+                  readOnly={
+                    dialogState.data?.patientId || !dialogState.isEditable
+                  }
                   required
                 ></input>
               </div>
@@ -323,7 +323,7 @@ const ExaminationModal = forwardRef(function ExaminationModal(
                 <label htmlFor="gender" className="col-form-label fw-bold">
                   Giới tính
                 </label>
-                {dialogState.isEditable ? (
+                {!dialogState.data?.patientId && dialogState.isEditable ? (
                   <select
                     className="form-select"
                     id="gender"
@@ -359,7 +359,9 @@ const ExaminationModal = forwardRef(function ExaminationModal(
                   name="birthyear"
                   type="number"
                   value={dialogState.data?.birthYear ?? ""}
-                  readOnly={!dialogState.isEditable}
+                  readOnly={
+                    dialogState.data?.patientId || !dialogState.isEditable
+                  }
                   required
                   min="0"
                   max={new Date().getFullYear()}
@@ -374,7 +376,9 @@ const ExaminationModal = forwardRef(function ExaminationModal(
                   id="address"
                   name="address"
                   value={dialogState.data?.address ?? ""}
-                  readOnly={!dialogState.isEditable}
+                  readOnly={
+                    dialogState.data?.patientId || !dialogState.isEditable
+                  }
                   required
                 ></input>
               </div>
@@ -397,6 +401,7 @@ const ExaminationModal = forwardRef(function ExaminationModal(
                   type="date"
                   name="scheduledate"
                   id="scheduledate"
+                  min={inputToDayFormat()}
                   value={inputDateFormat(dialogState.data?.scheduleDate) ?? ""}
                   required
                 ></input>

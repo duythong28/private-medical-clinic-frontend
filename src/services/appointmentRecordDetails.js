@@ -58,6 +58,7 @@ export async function fetchRecordDetailByRecordId({ id }) {
   const data = resData.data;
   return data;
 }
+
 export async function fetchAllAppointmentRecordDetails() {
   const response = await fetch(
     "http://localhost:8080/api/v1/appointmentrecorddetails",

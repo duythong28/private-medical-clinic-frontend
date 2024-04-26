@@ -12,7 +12,7 @@ import {
   deleteAppointmentListPatientById,
   fetchAllAppointmentListPatients,
 } from "../../../services/appointmentListPatients";
-import { convertDate } from "../../../util/date";
+import { convertDate, inputToDayFormat } from "../../../util/date";
 import { queryClient } from "../../../App";
 import { prescriptionAction } from "../../../store/prescription";
 import { fetchPatientById } from "../../../services/patients";
@@ -29,7 +29,7 @@ function ExaminationsPage() {
   const dispatch = useDispatch();
   const [examState, setExamState] = useState({
     name: "",
-    date: null,
+    date: inputToDayFormat(),
     state: 1,
   });
 

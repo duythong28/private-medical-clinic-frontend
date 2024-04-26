@@ -2,7 +2,10 @@ import PreScriptionTab from "../../pages/settings/examination/PrescriptionTab";
 import { useRef, useState, forwardRef, useImperativeHandle } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { convertDate } from "../../util/date";
-import { fetchAppointmentRecordById } from "../../services/appointmentRecords";
+import {
+  fetchAppointmentRecordByBill,
+  fetchAppointmentRecordById,
+} from "../../services/appointmentRecords";
 import { formatToVND } from "../../util/money";
 
 import MainInput from "../../components/MainInput";
@@ -24,6 +27,8 @@ const InvoiceDetail = forwardRef(function InvoiceDetail({ children }, ref) {
     isEditable: false,
   });
   const [appointmentRecordData, setAppointmentRecordData] = useState(null);
+
+  const [isBill, setIsBill] = useState(false);
 
   const diseasesQuery = useQuery({
     queryKey: ["diseases"],
@@ -87,7 +92,26 @@ const InvoiceDetail = forwardRef(function InvoiceDetail({ children }, ref) {
         setAppointmentRecordData(() => {
           return { ...resData };
         });
+        setIsBill(false);
         modalRef.current.show({ isEditable: true, header: "Thanh toán" });
+      },
+
+      async showDetail({ bill }) {
+        setDialogState((prevState) => {
+          return {
+            ...prevState,
+            drugExpense: 0,
+          };
+        });
+
+        const resData = await fetchAppointmentRecordByBill({ bill });
+        if (resData && resData[0]) {
+          setAppointmentRecordData(() => {
+            return { ...resData[0] };
+          });
+          setIsBill(true);
+          modalRef.current.show({ isEditable: false, header: "Hóa đơn" });
+        }
       },
     };
   });
@@ -258,18 +282,21 @@ const InvoiceDetail = forwardRef(function InvoiceDetail({ children }, ref) {
                 </div>
               </div>
             </div>
-            <div className="d-flex gap-3 mt-3 justify-content-end">
-              <button type="button" className="btn btn-secondary fw-bold">
-                In biên lai
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary fw-bold"
-                onClick={submitHandler}
-              >
-                Thanh toán
-              </button>
-            </div>
+            {!isBill && (
+              <div className="d-flex gap-3 mt-3 justify-content-end">
+                <button type="button" className="btn btn-secondary fw-bold">
+                  In biên lai
+                </button>
+
+                <button
+                  type="button"
+                  className="btn btn-primary fw-bold"
+                  onClick={submitHandler}
+                >
+                  Thanh toán
+                </button>
+              </div>
+            )}
           </Form>
         </div>
       </div>

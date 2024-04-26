@@ -2,7 +2,16 @@ import { useRef, forwardRef, useImperativeHandle } from "react";
 import MainModal from "./MainModal";
 
 const MainDialog = forwardRef(function MainDialog(
-  { children, addFn, editFn, keyQuery, onEdit, onSubmit, searchElement, onChange },
+  {
+    children,
+    addFn,
+    editFn,
+    keyQuery,
+    onEdit,
+    onSubmit,
+    searchElement,
+    onChange,
+  },
   ref
 ) {
   const modalRef = useRef();
@@ -25,7 +34,7 @@ const MainDialog = forwardRef(function MainDialog(
       return {
         async edit({ id, action, data }) {
           let editData;
-          if (id&&editFn) {
+          if (id && editFn) {
             editData = await editFn({ id });
           }
 
@@ -75,7 +84,10 @@ const MainDialog = forwardRef(function MainDialog(
             Đóng
           </button>
           {modalRef.current?.isEditable() && (
-            <button type="submit" className="btn btn-primary fw-bold">
+            <button
+              type="submit"
+              className="btn btn-primary fw-bold"
+            >
               Lưu
             </button>
           )}

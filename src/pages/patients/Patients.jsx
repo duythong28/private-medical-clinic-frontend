@@ -49,6 +49,7 @@ function PatientsPage() {
       };
     });
   }
+  
 
   function viewHandler({ id }) {
     navigate(`${id}`);

@@ -1,0 +1,344 @@
+.overview {
+    padding: 40px 16px 0 0;
+    // width: calc(100% - 220px);
+    height: auto;
+    margin-left: 0;
+    .pad-16{
+        padding: 0 16px;
+    }
+}
+
+.overview-greeting {
+    background-color: #13a1df;
+    color: #fff;
+    height: 100px;
+    border-radius: 12px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    display: flex;
+    position: relative;
+    justify-content:center;
+    align-items: center;
+}
+
+.overview-greeting h1 {
+    font-weight: 500;
+    font-size: 2rem;
+    max-height: 48px;
+    // width: 100%;
+    text-align: center;
+}
+
+.overview-greeting::after {
+    content: '';
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    position: absolute;
+    bottom: -10px;
+    right: 6px;
+    width: calc(100% - 12px);
+}
+
+.overview-greeting img {
+    width: 150px;
+    object-fit: cover;
+    position: absolute;
+    bottom: 0;
+    left: 30px;
+    overflow: visible;
+}
+
+.overview-number {
+    margin-top: 20px;
+    height: 100px;
+    border-radius: 12px;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    padding: 12px;
+    background-image: linear-gradient(to right, #54b5e2, #7c5bb5);
+    color: #333;
+    font-weight: 600;
+    display: flex;
+}
+
+.overview-number-patient {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.overview-number-percents {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
+
+.overview-number-percent {
+    height: 70px;
+    min-width: 150px;
+    border-radius: 12px;
+    padding: 8px;
+    background-color: #89d0ef;
+    box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
+}
+
+.overview-number-percent + .overview-number-percent {
+    margin-left: 16px;
+}
+
+.overview-typepatient-percent {
+    float: right;
+    font-size: 0.75rem;
+    width: 55px;
+    height: 20px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overview-typepatient-percent.new {
+    background-color: #b9d6bc;
+    color: #11a31f;
+}
+
+.overview-typepatient-percent.old {
+    background-color: #eac1c1;
+    color: #d74f4a;
+}
+
+/* Patients of day */
+
+.overview-number-typepatient {
+    margin-bottom: 8px;
+    font-size: 0.875rem;
+}
+
+.overview-patient-ofday {
+    margin-top: 16px;
+    // width: 100%;
+    border-radius: 12px;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    height: 200px;
+    padding: 12px 12px;
+    background-color: #fff;
+    position: relative;
+
+    .modal-calendar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 3;
+        display: none;
+    }
+
+    .weeks-selection {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        display: flex;
+        align-items: center;
+        color: #63797d;
+        .weeks-icon {
+            margin-left: 8px;
+        }
+
+        .show-modal {
+            margin: 0 8px;
+            font-weight: 600;
+            padding: 8px;
+            border-radius: 6px;
+            &:hover{
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        #toggle-modal {
+            display: none;
+        }
+
+        #toggle-modal:checked + .modal-calendar {
+            display: block;
+        }
+
+        .rdp {
+            // --rdp-cell-size: 34px;
+            --rdp-accent-color: #13a1df;
+            --rdp-background-color: #13a1df;
+        }
+
+        .btn-modal {
+            width: 90%;
+            height: 45px;
+            background-color: #13a1df;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            border: none;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-modal:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .overview-patient-chart {
+        width: 100%;
+        height: 180px;
+        display: flex;
+        overflow: hidden;
+        justify-content: center;
+        .overview-chart{
+            height: 150px !important;
+            width: 700px !important;
+        }
+        .chart-note {
+            margin: auto 0;
+            p {
+                padding-left: 48px;
+                font-size: 0.875rem;
+                font-weight: 500;
+                position: relative;
+                color: #333;
+                &::before {
+                    content: '';
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                    position: absolute;
+                    left: 20px;
+                    bottom: 4px;
+                }
+            }
+
+            .male {
+                &::before {
+                    background-color: #89d0ef;
+                }
+            }
+
+            .female {
+                &::before {
+                    background-color: #eb7474;
+                }
+            }
+        }
+    }
+}
+
+.modal-calendar-overlay {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-calendar-content {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: 350px;
+    height: 350px;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 430px;
+}
+
+/* Top medicine */
+.overview-topmedicine {
+    margin-top: 16px;
+    // width: 100%;
+    border-radius: 12px;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    height: 200px;
+    padding: 12px 12px;
+    background-color: #fff;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.selecweekormonth{
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.table-responsive{
+    margin-top: 12px;
+}
+
+.dropdown-menu{
+    max-width: 100px ;
+    .active{
+        background-color: #13a1df;
+    } 
+    .dropdown-item:active{
+        background-color: #13a1df;
+    }
+}
+    
+
+// Calendar
+#calendar {
+    height: 650px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 8px;
+}
+
+.calendar-container {
+    margin-bottom: 8px;
+    padding: 0 8px;
+    border-radius: 8px;
+    border: 2px solid #13a1df;
+    display: flex;
+    justify-content: center;
+}
+
+.calendar-container .rdp {
+    --rdp-cell-size: 34px;
+    --rdp-accent-color: #eb7474;
+    --rdp-background-color: #13a1df;
+}
+
+.my-today {
+    font-weight: bold;
+    color: #fff;
+}
+
+.patients-list {
+    flex: 1;
+    overflow-y: scroll;
+}
+
+.patient-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background-color: #89d0ef;
+    padding: 8px;
+    font-weight: 600;
+    .gender {
+        color: #666;
+        font-weight: 400;
+    }
+    .patient-name{
+        flex: 1
+    }
+    h6{
+        margin: 0;
+    }
+}
+
+.patient-item + .patient-item {
+    margin-top: 8px;
+}

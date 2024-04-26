@@ -10,22 +10,30 @@ import TableHeader from "../../components/TableHeader";
 import TableBody from "../../components/TableBody";
 import InvoiceDetail from "./InvoiceDetail";
 import { fetchAllAppointmentListById } from "../../services/appointmentList";
-import { convertDate, compareDates } from "../../util/date";
+import { convertDate, compareDates, inputToDayFormat } from "../../util/date";
 import { formatNumber } from "../../util/money";
 import { queryClient } from "../../App";
+import { fetchFeeConsult } from "../../services/argument";
 
 function PatientsPage() {
   const searchRef = useRef();
   const dialogRef = useRef();
   const [billState, setBillState] = useState({
-    date: null,
+    date: inputToDayFormat(),
+  });
+
+  const feeConsultQuery = useQuery({
+    queryKey: ["feeconsult"],
+    queryFn: async () => {
+      const res = (await fetchFeeConsult()) ?? 0;
+      return res;
+    },
   });
 
   const billsQuery = useQuery({
     queryKey: ["bills"],
     queryFn: async () => {
       const data = await fetchAllBills();
-      console.log("this is bill", data);
 
       const finalData = await Promise.all(
         data.map(async (item) => {
@@ -63,8 +71,8 @@ function PatientsPage() {
     });
   }
 
-  function viewHandler({ id }) {
-    // dialogRef.current.showDetail({ id: id, isBill: true });
+  function viewHandler({ bill }) {
+    dialogRef.current.showDetail({  bill});
   }
 
   async function deleteBillHandler({ id }) {
@@ -89,6 +97,7 @@ function PatientsPage() {
               >
                 <input
                   type="date"
+                  defaultValue={inputToDayFormat()}
                   name="date"
                   className="form-control"
                   aria-describedby="addon-wrapping"
@@ -134,14 +143,16 @@ function PatientsPage() {
                           {convertDate(bill?.appointmentList?.scheduleDate)}
                         </div>
                         <div className="text-start" style={{ width: "30%" }}>
-                          {formatNumber(bill.drugExpense)}
+                          {formatNumber(
+                            bill.drugExpense + feeConsultQuery.data
+                          )}
                         </div>
                         <div className="text-end" style={{ width: "10%" }}>
                           <span
                             className="p-2"
                             onClick={() =>
                               viewHandler({
-                                id: bill.id,
+                                bill
                               })
                             }
                           >

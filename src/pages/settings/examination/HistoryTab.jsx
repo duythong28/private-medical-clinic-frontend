@@ -15,7 +15,7 @@ import { fetchAppointentListPatientById } from "../../../services/appointmentLis
 import { queryClient } from "../../../App";
 import { fetchAllDisease } from "../../../services/diseases";
 
-export default function HistoryTab() {
+export default function HistoryTab({isEditable}) {
   const modalRef = useRef();
   const { appopintmentListPatientId } = useParams();
   let { patientId } = useParams();
@@ -113,7 +113,7 @@ export default function HistoryTab() {
                         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                       </svg>
                     </span>
-                    <span
+                    {isEditable && <span
                       className="p-2"
                       onClick={() => deleterecordHandler({ id: record.id })}
                     >
@@ -127,7 +127,8 @@ export default function HistoryTab() {
                       >
                         <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1M.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8z" />
                       </svg>
-                    </span>
+                    </span>}
+                    
                   </div>
                 </li>
               );

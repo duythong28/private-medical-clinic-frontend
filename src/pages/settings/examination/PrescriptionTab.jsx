@@ -67,6 +67,7 @@ export default function PreScriptionTab({
             id: record.drugId,
             drugName: drugData[0]?.drugName,
             amount: record.count,
+            note: drugData[0].note,
             unitId: drugData[0]?.unitId,
             usageId: record.usageId,
             count: drugData[0]?.count,
@@ -112,9 +113,11 @@ export default function PreScriptionTab({
     <div className="w-100 h-100 d-flex flex-column gap-3">
       {!recordId && <SearchDrugInput />}
       <TableHeader>
-        <div className="text-start" style={{ width: "5%" }}></div>
+        <div className="text-start" style={{ width: "5%" }}>
+          STT
+        </div>
         <div className="text-start" style={{ width: isBill ? "19%" : "22%" }}>
-          Tên thuốc
+          Thuốc
         </div>
         <div className="text-start" style={{ width: isBill ? "10%" : "15%" }}>
           Số lượng
@@ -150,22 +153,18 @@ export default function PreScriptionTab({
               key={drug.id}
             >
               <div className="text-start" style={{ width: "5%" }}>
-                {isEditable ? (
-                  <input
-                    className="form-check-input me-1"
-                    type="checkbox"
-                    value=""
-                    id="firstCheckbox"
-                  />
-                ) : (
-                  currentPresciptionData.indexOf(drug) + 1
-                )}
+                {currentPresciptionData.indexOf(drug) + 1}
               </div>
               <div
                 className="text-start"
                 style={{ width: isBill ? "20%" : "23%" }}
               >
                 {drug.drugName}
+                {drug.note && (
+                  <>
+                    <span>{" (" + drug.note + " )"}</span>
+                  </>
+                )}
               </div>
               <div
                 className="text-start"

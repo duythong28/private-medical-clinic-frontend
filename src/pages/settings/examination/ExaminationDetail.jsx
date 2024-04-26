@@ -83,7 +83,7 @@ export default function ExaminationDetail() {
 
     const formData = new FormData(form);
     const examData = Object.fromEntries(formData);
-    const symptoms = examData.symptoms;
+    const symptoms = examData.symptoms.trim();
     const diseaseId = examData.diagnostic;
     const patientId = appointmentListPatientData.patientId;
     const appointmentListId = appointmentListPatientData.appointmentListId;
@@ -96,12 +96,30 @@ export default function ExaminationDetail() {
     setValidated(false);
   }
 
+  function changeFormHandler(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const examData = Object.fromEntries(formData);
+    const symptoms = examData.symptoms.trim();
+    setDataState((prevState) => {
+      return {
+        isEditable: prevState.isEditable,
+        data: {
+          ...prevState.data,
+          symptoms,
+        },
+      };
+    });
+  }
+
   return (
     <Card>
       <Form
         className="w-100 h-100 d-flex flex-row  gap-3"
         onSubmit={finishExamHandler}
         noValidate
+        onChange={changeFormHandler}
         validated={validated}
       >
         <div style={{ width: "40%" }}>
@@ -268,7 +286,11 @@ export default function ExaminationDetail() {
               </NavLink>
             </nav>
             <div className="col text-end">
-              <button className="btn btn-primary" type="submit">
+              <button
+                className="btn btn-primary"
+                type="submit"
+                disabled={dataState.data?.symptoms ? false : true}
+              >
                 Hoàn thành
               </button>
             </div>

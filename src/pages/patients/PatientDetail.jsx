@@ -80,7 +80,7 @@ export default function PatientDetail() {
           <div className="col"></div>
         </div>
         <div className="w-100 h-100 overflow-hidden">
-          <HistoryTab />
+          <HistoryTab isEditable={true} />
         </div>
       </Form>
     </Card>

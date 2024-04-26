@@ -20,10 +20,10 @@ function LoginPage() {
     },
   });
 
-  const isAuth = localStorage.getItem("refreshToken");
-  if (isAuth) {
-    return <Navigate to="/systems/home" />;
-  }
+  // const isAuth = localStorage.getItem("refreshToken");
+  // if (isAuth) {
+  //   return <Navigate to="/systems/home" />;
+  // }
 
   async function localLoginHandler(event) {
     event.preventDefault();

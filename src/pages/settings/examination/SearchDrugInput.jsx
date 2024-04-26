@@ -44,6 +44,7 @@ export default function SearchDrugInput() {
     const drugResult = drugState.filter((drug) =>
       drug.drugName.toLowerCase().includes(textSearch)
     );
+    console.log("this is drug data", drugState);
     setDrugs(() => drugResult);
   }
 
@@ -95,16 +96,21 @@ export default function SearchDrugInput() {
                       className="list-group-item list-group-item-info list-group-item-action w-100 d-flex flex-row"
                       key={drug.id}
                     >
-                      <div className="text-start" style={{ width: "50%" }}>
+                      <div className="text-start" style={{ width: "65%" }}>
                         Thuốc: <span className="fw-bold">{drug.drugName}</span>
+                        {drug.note && (
+                          <>
+                            <span className="fw-bold">{' ('+ drug.note +' )'}</span>
+                          </>
+                        )}
                       </div>
-                      <div className="text-start" style={{ width: "25%" }}>
+                      <div className="text-start" style={{ width: "30%" }}>
                         Tồn kho:{" "}
                         <span className="fw-bold">
                           {drug.count} {getUnitName({ id: drug.unitId })}
                         </span>
                       </div>
-                      <div className="text-end" style={{ width: "25%" }}>
+                      <div className="text-end" style={{ width: "5%" }}>
                         <span
                           className="p-2"
                           onClick={() =>
