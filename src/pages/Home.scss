@@ -1,55 +1,61 @@
 .overview {
-    padding: 40px 16px 0 0;
+    // padding: 40px 16px 0 0;
     // width: calc(100% - 220px);
     height: auto;
     margin-left: 0;
-    .pad-16{
-        padding: 0 16px;
-    }
+    // background: rgb(249, 249, 249);
+    background: #E9ECEF;
+    // .pad-16{
+    //     padding: 0 16px;
+    // }
+    // .pad-16{
+    //     padding: 1rem;
+    // }
 }
 
-.overview-greeting {
-    background-color: #13a1df;
-    color: #fff;
-    height: 100px;
-    border-radius: 12px;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    display: flex;
-    position: relative;
-    justify-content:center;
-    align-items: center;
-}
+// .overview-greeting {
+//     background-color: #13a1df;
+//     color: #fff;
+//     height: 100px;
+//     border-radius: 12px;
+//     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+//     display: flex;
+//     position: relative;
+//     justify-content:center;
+//     align-items: center;
+// }
 
-.overview-greeting h1 {
-    font-weight: 500;
-    font-size: 2rem;
-    max-height: 48px;
-    // width: 100%;
-    text-align: center;
-}
+// .overview-greeting h1 {
+//     font-weight: 500;
+//     font-size: 2rem;
+//     max-height: 48px;
+//     // width: 100%;
+//     text-align: center;
+// }
 
-.overview-greeting::after {
-    content: '';
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    position: absolute;
-    bottom: -10px;
-    right: 6px;
-    width: calc(100% - 12px);
-}
+// .overview-greeting::after {
+//     content: '';
+//     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+//     position: absolute;
+//     bottom: -10px;
+//     right: 6px;
+//     width: calc(100% - 12px);
+// }
 
-.overview-greeting img {
-    width: 150px;
-    object-fit: cover;
-    position: absolute;
-    bottom: 0;
-    left: 30px;
-    overflow: visible;
-}
+// .overview-greeting img {
+//     width: 150px;
+//     object-fit: cover;
+//     position: absolute;
+//     bottom: 0;
+//     left: 30px;
+//     overflow: visible;
+// }
 
 .overview-number {
-    border-radius: 12px;
-    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
-    padding: 20px 16px;
+    // border-radius: 12px;
+    // box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    // padding: 20px 16px;
+    border:  1px solid #f0f0f0;
     background-image: linear-gradient(to right, #54b5e2, #7c5bb5);
     color: #333;
     font-weight: 600;
@@ -65,12 +71,16 @@
 }
 
 .overview-number-percent {
-    height: 70px;
+    // height: 70px;
     min-width: 150px;
-    border-radius: 12px;
+    // border-radius: 12px;
+    border-radius: 0.5rem;
     padding: 8px;
     background-color: #89d0ef;
-    box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    // box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    p {
+        margin-bottom: 0rem;
+    }
 }
 
 .overview-number-percent + .overview-number-percent {
@@ -82,7 +92,8 @@
     font-size: 0.75rem;
     width: 55px;
     height: 20px;
-    border-radius: 12px;
+    // border-radius: 12px;
+    border-radius: 0.5rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -156,9 +167,10 @@
 
 .overview-patient-ofday {
     margin-top: 16px;
-    border-radius: 12px;
-    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
-    padding: 12px 12px;
+    // border-radius: 12px;
+    // box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    // padding: 12px 12px;
+    border:  1px solid #f0f0f0;
     background-color: #fff;
     position: relative;
     h6{
@@ -249,10 +261,11 @@
 /* Top medicine */
 .overview-topmedicine {
     margin-top: 16px;
-    border-radius: 12px;
-    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
-    height: 220px;
-    padding: 12px 12px;
+    // border-radius: 12px;
+    // box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    // height: 220px;
+    // padding: 12px 12px;
+    border:  1px solid #f0f0f0;
     background-color: #fff;
     position: relative;
     h6{
@@ -327,13 +340,14 @@
 
 // Calendar
 #calendar {
-    height: 650px;
-    border-radius: 8px;
-    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    // height: 650px;
+    // border-radius: 8px;
+    // box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
+    border:  1px solid #f0f0f0;
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    padding: 8px;
+    // padding: 8px;
 }
 
 .calendar-container {

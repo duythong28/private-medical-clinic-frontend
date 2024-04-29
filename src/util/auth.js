@@ -17,7 +17,6 @@ export async function login(userData) {
     response = await fetch("http://localhost:8080/api/v1/auth/success");
   }
 
-  console.log("this is response)", await response.json());
   if (!response.ok) {
     const error = new Error("Thông tin đăng nhập không chính xác");
     error.code = response.status;

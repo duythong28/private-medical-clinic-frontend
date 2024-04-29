@@ -96,7 +96,7 @@ function LoginPage() {
             >
               <div
                 className="position-absolute top-50 mt-50 start-50 translate-middle"
-                style={{ width: "70%" }}
+                style={{ width: "60%" }}
               >
                 <Card>
                   <div className="col fw-bold fs-4 mb-4 text-center text-dark">
@@ -135,7 +135,7 @@ function LoginPage() {
                       </div>
                       <PasswordInput name={"password"} label={"Mật khẩu"} />
                       <button
-                        className="w-100 mb-2 mt-3 btn rounded-3 btn-primary shadow"
+                        className="w-100 mb-4 mt-3 btn rounded-3 btn-primary shadow"
                         type="submit"
                       >
                         Đăng nhập
