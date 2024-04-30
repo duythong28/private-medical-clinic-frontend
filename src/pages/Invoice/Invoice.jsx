@@ -65,6 +65,7 @@ function PatientsPage() {
   }, [billState]);
 
   const bills = billsQuery.data;
+  console.log("this is bill", bills);
 
   function searchHandler() {
     const formData = new FormData(searchRef.current);

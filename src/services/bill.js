@@ -46,8 +46,8 @@ export async function fetchAllBills() {
   const response = await fetch("http://localhost:8080/api/v1/bills", {
     credentials: "include",
     headers: {
-      "Content-Type": "application/json",
       authorization: "Bearer",
+      "Content-Type": "application/json",
     },
   });
   if (!response.ok) {
