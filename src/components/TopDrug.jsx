@@ -15,8 +15,7 @@ import { fetchAllDrugs } from "../services/drugs";
 import { fetchAppointmentRecordById } from "../services/appointmentRecords";
 import { fetchAllBills } from "../services/bill";
 import "../pages/Home.scss";
-import { convertDate } from "../util/date";
-import { compareDate, getWeek } from "../components/SelectDayContext";
+import { compareDate, convertDate, getWeek } from "../components/SelectDayContext";
 
 function TopDrug() {
   const [range2, setRange2] = useState(() => getWeek(new Date()));
@@ -71,19 +70,6 @@ function TopDrug() {
     setIsShowModal2(false);
   };
 
-  // const preState = useRef(
-  //   (() => {
-  //     const month = new Date().getMonth();
-  //     const year = new Date().getFullYear();
-  //     const selectedOption = true;
-  //     return {
-  //       selectedOption,
-  //       month,
-  //       year,
-  //       range: getWeek(new Date()),
-  //     };
-  //   })()
-  // );
 
   const handleTopDrug = () => {
     const drugInfo = drugs.map((item) => {
@@ -211,16 +197,17 @@ function TopDrug() {
 
   return (
     <div
-      className="h-100 overview-topmedicine rounded-3 p-3"
-      style={{ border: "1px solid #B9B9B9" }}
+      className=" overview-topmedicine rounded-3 p-3 "
+      style={{ border: "1px solid #B9B9B9"}}
     >
       <label className="fw-bold text-dark">Thuốc bán chạy</label>
       <p
         className="show-modal week-or-month-info"
         onClick={() => setIsShowModal2(true)}
+        style={{border: "1px solid #d5d5d5"}}
       >
         {selectedOption
-          ? convertDate(range2.from) + " - " + convertDate(range2.to.toString())
+          ? convertDate(range2.from, range2.to)
           : `Tháng ${month.month + 1} ${month.year}`}
         <FontAwesomeIcon
           className="weeks-icon"

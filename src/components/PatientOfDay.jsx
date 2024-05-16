@@ -89,45 +89,41 @@ function PatientOfDay() {
   }, [selectedDay]);
 
   return (
-    <div
-      className="h-100 overview-number rounded-3 p-3"
-      style={{ border: "1px solid #B9B9B9" }}
-    >
-      <div>
-        <h6>Số lượng bệnh nhân</h6>
-        <h3 className="overview-number-patient">{patientsToday.length}</h3>
-      </div>
-      <div className="overview-number-percents">
-        <div className="overview-number-percent shadow">
-          <p className="overview-number-typepatient">Bệnh nhân mới</p>
-          <p>
-            {dataToday.newPatient}
-            <span className="overview-typepatient-percent new">
-              {patientsToday.length > 0
-                ? ((dataToday.newPatient / patientsToday.length) * 100).toFixed(
-                    2
-                  )
-                : 0}
-              %
-            </span>
-          </p>
-        </div>
-        <div className="overview-number-percent shadow">
-          <p className="overview-number-typepatient">Bệnh nhân cũ</p>
-          <p>
-            {dataToday.oldPatient}
-            <span className="overview-typepatient-percent old">
-              {patientsToday.length > 0
-                ? ((dataToday.oldPatient / patientsToday.length) * 100).toFixed(
-                    2
-                  )
-                : 0}
-              %
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
+      // <div class="e-card playing rounded-3 p-3 h-100">
+          <div
+            className="h-100 overview-number rounded-3 p-3"
+            style={{ border: "1px solid #B9B9B9" }}
+          >
+              <div >
+                <label className="fw-bold" style={{margin: 0, fontSize: "1rem"}}>Số lượng bệnh nhân trong ngày</label>
+                <h3 className="overview-number-patient ">{patientsToday.length}</h3>
+              </div>
+              <div className="overview-number-percents z-2">
+                  <div>
+                    <p className="txt-center">Bệnh nhân mới</p>
+                    <p className="txt-center">{patientsToday.length > 0 ? dataToday.newPatient : 0}</p>
+                    <p className="txt-center">{patientsToday.length > 0
+                        ? ((dataToday.newPatient / patientsToday.length) * 100).toFixed(
+                            2
+                          )
+                        : 0}%
+                    </p>
+                  </div>
+                 
+                  <div>
+                    <p className="txt-center">Bệnh nhân cũ</p>
+                    <p className="txt-center">{patientsToday.length > 0 ? dataToday.oldPatient : 0}</p>
+                    <p className="txt-center">{patientsToday.length > 0
+                        ? ((dataToday.oldPatient / patientsToday.length) * 100).toFixed(
+                            2
+                          )
+                        : 0}%
+                    </p>
+                  </div>
+                 
+              </div>
+            </div>
+      // </div>
   );
 }
 

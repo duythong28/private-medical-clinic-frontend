@@ -48,3 +48,16 @@ export const getWeek = (day) => {
       to: endOfWeek,
     };
 };
+
+export function convertDate(from, to) {
+  const fromDate = new Date(from);
+  const toDate = new Date(to);
+
+  const fromDay = fromDate.getDate();
+  const fromMonth = fromDate.getMonth() + 1; 
+  const toDay = toDate.getDate();
+  const toMonth = toDate.getMonth() + 1;
+  const toYear = toDate.getFullYear();
+
+  return `${fromDay}/${fromMonth} - ${toDay}/${toMonth}/${toYear}`;
+}

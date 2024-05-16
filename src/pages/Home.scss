@@ -4,70 +4,22 @@
   // background: #E9ECEF;
 }
 
-.overview-number {
-  // border-radius: 12px;
-  // box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
-  // padding: 20px 16px;
-  border: 1px solid #f0f0f0;
-  background-image: linear-gradient(to right, #54b5e2, #7c5bb5);
-  color: #333;
-  font-weight: 600;
+.overview-number-patient {
+  font-size: 6rem;
+  text-align: center;
 }
 
-.overview-number-patient {
-  font-size: 2.2rem;
+.txt-center{
+  text-align: center;
+  margin: 0;
 }
 
 .overview-number-percents {
   display: flex;
   flex: 1;
+  justify-content: space-between;
 }
 
-.overview-number-percent {
-  // height: 70px;
-  min-width: 150px;
-  // border-radius: 12px;
-  border-radius: 0.5rem;
-  padding: 8px;
-  background-color: #89d0ef;
-  // box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
-  p {
-    margin-bottom: 0rem;
-  }
-}
-
-.overview-number-percent + .overview-number-percent {
-  margin-left: 16px;
-}
-
-.overview-typepatient-percent {
-  float: right;
-  font-size: 0.75rem;
-  width: 55px;
-  height: 20px;
-  // border-radius: 12px;
-  border-radius: 0.5rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.overview-typepatient-percent.new {
-  background-color: #b9d6bc;
-  color: #11a31f;
-}
-
-.overview-typepatient-percent.old {
-  background-color: #eac1c1;
-  color: #d74f4a;
-}
-
-/* Patients of day */
-
-.overview-number-typepatient {
-  margin-bottom: 8px;
-  font-size: 0.875rem;
-}
 
 .modal-calendar {
   position: fixed;
@@ -83,9 +35,9 @@
   border: 1px solid #13a1df;
   margin: 0 8px;
   font-weight: 600;
-  padding: 8px;
+  padding: 4px;
   border-radius: 6px;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
@@ -121,13 +73,10 @@
 }
 
 .overview-patient-ofday {
-  margin-top: 16px;
-  // border-radius: 12px;
-  // box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.5);
-  // padding: 12px 12px;
   border: 1px solid #f0f0f0;
   background-color: #fff;
   position: relative;
+  width: 70%;
   h6 {
     margin-bottom: 20px;
   }
@@ -148,11 +97,13 @@
   }
 
   .overview-patient-chart {
+    margin-top: 12px;
     width: 100%;
+    height: 90%;
     // display: flex;
     overflow: hidden;
     .overview-chart {
-      height: 100% !important;
+      // height: 80% !important;
       width: 100% !important;
     }
     .chart-note {
@@ -258,6 +209,7 @@
   .table-top-drug {
     width: 100%;
     font-weight: bold;
+    margin-top: 12px;
     p {
       font-size: 1rem;
       flex: 1;
@@ -362,36 +314,14 @@
 }
 
 .patient-item {
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // border-radius: 12px;
-  // background-color: #89d0ef;
-  // padding: 8px;
-  // font-weight: 600;
-  // .gender {
-  //     color: #666;
-  //     font-weight: 400;
-  // }
-  // .patient-name{
-  //     flex: 1
-  // }
-  // h6{
-  //     margin: 0;
-  // }
+
 
   display: flex;
   flex-direction: row;
-  // align-items: center;
-  // justify-content: center;
   border-radius: 12px;
   background-color: #edf0f5;
   padding: 10px;
   font-weight: 600;
-
-  .image {
-    // background-color: green;
-  }
 
   .gender {
     color: #666;
@@ -451,5 +381,73 @@
 
 .link-all {
   text-decoration: none;
-  //   font-weight: bold;
+}
+
+.overview-number {
+  border: 1px solid #f0f0f0;
+  background-color: #fff;
+  color: #333;
+  font-weight: 600;
+  width: 30%;
+}
+
+.e-card {
+  background-color: #0048B2;
+  box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.45);
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.wave {
+  position: absolute;
+  width: 160%;
+  height: 700px;
+  opacity: 0.6;
+  left: 0;
+  top: 60;
+  margin-left: -50%;
+  margin-top: -70%;
+  background: linear-gradient(744deg,#3B8AFF,#0048B2 60%,);
+}
+
+.wave:nth-child(2),
+.wave:nth-child(3) {
+  top: 210px;
+}
+
+.playing .wave {
+  border-radius: 40%;
+  animation: wave 3000ms infinite linear;
+}
+
+.wave {
+  border-radius: 40%;
+  animation: wave 55s infinite linear;
+}
+
+.playing .wave:nth-child(2) {
+  animation-duration: 4000ms;
+}
+
+.wave:nth-child(2) {
+  animation-duration: 50s;
+}
+
+.playing .wave:nth-child(3) {
+  animation-duration: 5000ms;
+}
+
+.wave:nth-child(3) {
+  animation-duration: 45s;
+}
+
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
