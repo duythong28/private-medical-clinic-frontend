@@ -47,6 +47,9 @@ let rememberYear = dayjs();
 let rememberWeek2 = dayjs();
 let rememberMonth2 = dayjs();
 let rememberYear2 = dayjs();
+let rememberWeek3 = dayjs();
+let rememberMonth3 = dayjs();
+let rememberYear3 = dayjs();
 let stopInitLoad = false;
 
 function Revenue() {
@@ -95,35 +98,11 @@ function Revenue() {
     }
     return null;
   };
+
+
   const [valueTime, setValueTime] = React.useState(dayjs());
   const setNewTime = (value) => {
     setValueTime(value);
-  };
-  const [valueTime2, setValueTime2] = React.useState(dayjs());
-  const setNewTime2 = (value) => {
-    setValueTime2(value);
-    if (timeOption2 === "Tuần") {
-      getDataForChartWeek(value);
-      setNewDataForDonutChart(value, "Week");
-    } else if (timeOption2 === "Tháng") {
-      getDataForChartMonth(value);
-      setNewDataForDonutChart(value, "Month");
-    } else {
-      getDataForChartYear(value);
-      setNewDataForDonutChart(value, "Year");
-    }
-  };
-  const getFirstDayOfWeek = (date) => {
-    const startOfWeek = dayjs(date).startOf("week");
-    if (startOfWeek.day() === 0) {
-      return startOfWeek.add(1, "day");
-    }
-    return startOfWeek;
-  };
-  const getWeekStartAndEnd = (selectedDay) => {
-    const startOfWeek = getFirstDayOfWeek(selectedDay);
-    const endOfWeek = startOfWeek.add(6, "days");
-    return { start: startOfWeek, end: endOfWeek };
   };
   const [isOpenCalendar, setIsOpenCalendar] = React.useState(false);
   const handlerSetNewTime = (value) => {
@@ -133,20 +112,6 @@ function Revenue() {
   const handleOpenCalendar = (value) => {
     setIsOpenCalendar(value);
     setIsOpenTimeOption(false);
-  };
-  const [isOpenCalendar2, setIsOpenCalendar2] = React.useState(false);
-  const handlerSetNewTime2 = (value) => {
-    setNewTime2(value);
-    setIsOpenCalendar2(false);
-  };
-  const handleOpenCalendar2 = (value) => {
-    setIsOpenCalendar2(value);
-    setIsOpenTimeOption2(false);
-  };
-  const [isOpenTimeOption2, setIsOpenTimeOption2] = React.useState(false);
-  const handleOpenTimeOption2 = (value) => {
-    setIsOpenCalendar2(false);
-    setIsOpenTimeOption2(value);
   };
   const [isOpenTimeOption, setIsOpenTimeOption] = React.useState(false);
   const handleOpenTimeOption = (value) => {
@@ -164,6 +129,35 @@ function Revenue() {
     else setValueTime(rememberYear);
   };
 
+
+
+  const [valueTime2, setValueTime2] = React.useState(dayjs());
+  const setNewTime2 = (value) => {
+    setValueTime2(value);
+    if (timeOption2 === "Tuần") {
+      getDataForChartWeek(value);
+    } else if (timeOption2 === "Tháng") {
+      getDataForChartMonth(value);
+    } else {
+      getDataForChartYear(value);
+    }
+  };
+  const [isOpenCalendar2, setIsOpenCalendar2] = React.useState(false);
+  const handlerSetNewTime2 = (value) => {
+    setNewTime2(value);
+    setIsOpenCalendar2(false);
+  };
+  const handleOpenCalendar2 = (value) => {
+    setIsOpenCalendar2(value);
+    setIsOpenTimeOption2(false);
+  };
+
+  const [isOpenTimeOption2, setIsOpenTimeOption2] = React.useState(false);
+  const handleOpenTimeOption2 = (value) => {
+    setIsOpenCalendar2(false);
+    setIsOpenTimeOption2(value);
+  };
+  
   const [timeOption2, setTimeOption2] = React.useState("Tuần");
   const handleSetTimeOption2 = (value) => {
     if (timeOption2 === "Tuần") rememberWeek2 = valueTime2;
@@ -175,15 +169,78 @@ function Revenue() {
     else setValueTime2(rememberYear2);
     if (value === "Tuần") {
       getDataForChartWeek(rememberWeek2);
-      setNewDataForDonutChart(rememberWeek2, "Week");
     } else if (value === "Tháng") {
       getDataForChartMonth(rememberMonth2);
-      setNewDataForDonutChart(rememberMonth2, "Month");
     } else {
       getDataForChartYear(rememberYear2);
-      setNewDataForDonutChart(rememberYear2, "Month");
     }
   };
+
+  const [valueTime3, setValueTime3] = React.useState(dayjs());
+  const setNewTime3 = (value) => {
+    setValueTime3(value);
+    if (timeOption3 === "Tuần") {
+      setNewDataForDonutChart(value, "Week");
+    } else if (timeOption3 === "Tháng") {
+      setNewDataForDonutChart(value, "Month");
+    } else {
+      setNewDataForDonutChart(value, "Year");
+    }
+  };
+  
+  const [isOpenCalendar3, setIsOpenCalendar3] = React.useState(false);
+  const handlerSetNewTime3 = (value) => {
+    setNewTime3(value);
+    setIsOpenCalendar3(false);
+  };
+  const handleOpenCalendar3 = (value) => {
+    setIsOpenCalendar3(value);
+    setIsOpenTimeOption3(false);
+  };
+
+  const [isOpenTimeOption3, setIsOpenTimeOption3] = React.useState(false);
+  const handleOpenTimeOption3 = (value) => {
+    setIsOpenCalendar3(false);
+    setIsOpenTimeOption3(value);
+  };
+  
+  
+
+  const [timeOption3, setTimeOption3] = React.useState("Tuần");
+  const handleSetTimeOption3 = (value) => {
+    if (timeOption3 === "Tuần") rememberWeek3 = valueTime3;
+    else if (timeOption3 === "Tháng") rememberMonth3 = valueTime3;
+    else rememberYear3 = valueTime3;
+    setTimeOption3(value);
+    if (value === "Tuần") setValueTime3(rememberWeek3);
+    else if (value === "Tháng") setValueTime3(rememberMonth3);
+    else setValueTime3(rememberYear3);
+    if (value === "Tuần") {
+      setNewDataForDonutChart(rememberWeek3, "Week");
+    } else if (value === "Tháng") {
+      setNewDataForDonutChart(rememberMonth3, "Month");
+    } else {
+      setNewDataForDonutChart(rememberYear3, "Month");
+    }
+  };
+
+  
+  const getFirstDayOfWeek = (date) => {
+    const startOfWeek = dayjs(date).startOf("week");
+    if (startOfWeek.day() === 0) {
+      return startOfWeek.add(1, "day");
+    }
+    return startOfWeek;
+  };
+  const getWeekStartAndEnd = (selectedDay) => {
+    const startOfWeek = getFirstDayOfWeek(selectedDay);
+    const endOfWeek = startOfWeek.add(6, "days");
+    return { start: startOfWeek, end: endOfWeek };
+  };
+
+  
+  
+  
 
   const formatDate = (date) => {
     const day = getWeekStartAndEnd(date);
@@ -217,6 +274,28 @@ function Revenue() {
       return "Thg " + time.month + " " + time.year;
     }
     if (timeOption2 == "Năm") {
+      return time.year;
+    }
+  };
+  const displayTime3 = (date) => {
+    const time = formatDate(date);
+    if (timeOption3 == "Tuần") {
+      return (
+        time.start +
+        "/" +
+        time.ms +
+        " - " +
+        time.end +
+        "/" +
+        time.me +
+        "/" +
+        time.ye
+      );
+    }
+    if (timeOption3 == "Tháng") {
+      return "Thg " + time.month + " " + time.year;
+    }
+    if (timeOption3 == "Năm") {
       return time.year;
     }
   };
@@ -501,7 +580,7 @@ function Revenue() {
         },
       ],
     });
-    setNewDataForDonutChart(valueTime2, "Week");
+    setNewDataForDonutChart(valueTime3, "Week");
   }, [bills]);
 
   // React.useEffect(()=>{
@@ -663,8 +742,6 @@ function Revenue() {
         const value = dataDonut.datasets[0].data[hoveredElementIndex];
         setDonutText(label);
         setDonutCost(value);
-        // console.log("cost3",value);
-
         if (hoveredElementIndex == 0) setDonutColor("#85f4fa");
         else setDonutColor("#3a57e8");
       } else {
@@ -673,7 +750,6 @@ function Revenue() {
         setDonutCost(
           dataDonut.datasets[0].data[0] + dataDonut.datasets[0].data[1]
         );
-        // console.log("cost1",dataDonut.datasets[0].data[0] + dataDonut.datasets[0].data[1]);
       }
     },
   };
@@ -686,9 +762,8 @@ function Revenue() {
         setIsSetAvailable(false);
         setDonutColor("#555555");
         setDonutText("Doanh thu");
-        const newData = getDataForDonutChart(valueTime2, timeOption2);
+        const newData = getDataForDonutChart(valueTime3, timeOption3);
         setDonutCost(newData.sumDrug + newData.sumFee);
-        console.log("cost4", newData.sumDrug + newData.sumFee);
       };
 
       canvas.addEventListener("mouseout", handleMouseOut);
@@ -697,7 +772,7 @@ function Revenue() {
         canvas.removeEventListener("mouseout", handleMouseOut);
       };
     }
-  }, [chartRef, appointmentLists, bills]);
+  }, [chartRef, bills, appointmentLists, valueTime3]);
   useEffect(() => {
     const chartInstance = chartRef.current;
     if (chartInstance) {
@@ -737,7 +812,6 @@ function Revenue() {
         );
     }
   }
-
   // GET DATA FOR DOUGHNUT CHART
   const setNewDataForDonutChart = (time, option) => {
     const newData = getDataForDonutChart(time, option);
@@ -932,7 +1006,7 @@ function Revenue() {
                 <div className="d-flex justify-content-between">
                   <label className="fw-bold text-dark">Doanh thu</label>
                   <div className="row">
-                    <div className="select-box-4">
+                    <div className="select-box-6">
                       <div
                         className="combobox-chart"
                         onClick={() => handleOpenCalendar2(!isOpenCalendar2)}
@@ -1015,8 +1089,88 @@ function Revenue() {
         </div>
         <div className="row h-100">
           <Card>
-            <label className="fw-bold text-dark">Chi tiết doanh thu</label>
             <div className="chartdonut-area">
+            <div className="option-time-chart">
+                <div className="d-flex justify-content-between">
+                  <label className="fw-bold text-dark">Phân bố doanh thu</label>
+                  <div className="row ">
+                    <div className="select-box-4">
+                      <div
+                        className="combobox-chart"
+                        onClick={() => handleOpenCalendar3(!isOpenCalendar3)}
+                      >
+                        <p>{displayTime3(valueTime3)}</p>
+                        <div className="icon">
+                          <FontAwesomeIcon
+                            className="icon"
+                            icon={faCaretDown}
+                          />
+                        </div>
+                      </div>
+                      {isOpenCalendar3 && (
+                        <div className="calendar">
+                          <SelectTime
+                            setNewTime={setNewTime3}
+                            value={valueTime3}
+                            timeOption={timeOption3}
+                            handlerSetNewTime={handlerSetNewTime3}
+                          ></SelectTime>
+                        </div>
+                      )}
+                    </div>
+                    <div
+                      className="select-box-5"
+                      style={{ marginLeft: "10px" }}
+                    >
+                      <div
+                        className="combobox"
+                        onClick={() =>
+                          handleOpenTimeOption3(!isOpenTimeOption3)
+                        }
+                      >
+                        <p>{timeOption3}</p>
+                        <div className="icon">
+                          <FontAwesomeIcon
+                            className="icon"
+                            icon={faCaretDown}
+                          />
+                        </div>
+                      </div>
+                      {isOpenTimeOption3 && (
+                        <div className="select-time">
+                          <div
+                            className="item"
+                            onClick={() => {
+                              handleSetTimeOption3("Tuần");
+                              handleOpenTimeOption3(false);
+                            }}
+                          >
+                            <p>Tuần</p>
+                          </div>
+                          <div
+                            className="item"
+                            onClick={() => {
+                              handleSetTimeOption3("Tháng");
+                              handleOpenTimeOption3(false);
+                            }}
+                          >
+                            <p>Tháng</p>
+                          </div>
+                          <div
+                            className="item"
+                            onClick={() => {
+                              handleSetTimeOption3("Năm");
+                              handleOpenTimeOption3(false);
+                            }}
+                          >
+                            <p>Năm</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="donut-chart">
                 <div className="Chart">
                   <Doughnut

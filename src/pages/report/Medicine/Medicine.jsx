@@ -170,7 +170,7 @@ function Medicine() {
     setIsOpenCalendar(value);
     setIsOpenTimeOption(false);
   };
-  const [timeOption, setTimeOption] = React.useState("Tuần");
+  const [timeOption, setTimeOption] = React.useState("Tháng");
   const handleSetTimeOption = (value) => {
     if (timeOption === "Tuần") rememberWeek = valueTime;
     else if (timeOption === "Tháng") rememberMonth = valueTime;
@@ -974,7 +974,7 @@ function Medicine() {
                 Số lượng tồn kho
               </div>
               <div className="text-start" style={{ width: "20%" }}>
-                Số lần dùng
+                Số lượng bán ra
               </div>
               <div className="text-start" style={{ width: "1%" }}></div>
             </TableHeader>
@@ -1155,7 +1155,7 @@ function Medicine() {
                 <p>Đơn vị: {getUnitName({ id: selectItem?.unitId })}</p>
               </div>
               <div className="detail-item">
-                <p>Giá bán: {formatMoney(selectItem?.price)}</p>
+                <p>Giá bán hiện tại: {formatMoney(selectItem?.price)}</p>
               </div>
               <div className="detail-item">
                 <p>Số lượng tồn kho: {selectItem?.count}</p>

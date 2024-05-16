@@ -152,6 +152,37 @@
     left: -5px;
   }
 }
+.select-box-6 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  width: 130px;
+  z-index: 2;
+  border: 1px solid #d5d5d5 !important;
+  border-radius: 3px;
+  .combobox {
+    height: 100%;
+    width: 100%;
+  }
+  p {
+    margin: 8px;
+    font-weight: 500;
+    font-size: 12px;
+  }
+  .icon {
+    position: absolute;
+    top: 4px;
+    right: 3px;
+    font-size: 12px;
+  }
+  .calendar {
+    position: absolute;
+    top: 20px;
+    left: -125px !important;
+  }
+}
+
 
 .donut-chart {
   display: flex;
@@ -219,3 +250,9 @@
     z-index: 1;
   }
 }
+
+.header-donutchart {
+  display: flex;
+  flex-direction: row;
+}
+

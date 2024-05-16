@@ -75,7 +75,7 @@ function SelectTime({ setNewTime, value, timeOption, handlerSetNewTime }) {
       adapterLocale="vi"
     >
       <DemoContainer components={["YearCalendar", "MonthCalendar"]}>
-        <div className="container">
+        <div className="container-calendar">
           {timeOption === "Tuần" && (
             <DemoItem>
               <div className="year-calendar">
